@@ -1,17 +1,20 @@
 import uuid
 import random
 
-from schemas import Product
+from schemas import Check
 
-desc = ['awesome', 'good', 'not bad', 'bad', 'awful']
+desc = ['ok', 'wait', 'close']
+desc1 = ['bla bla bla', 'tra lia lia', 'ko ko ko']
 
 
-def generate_payment(number) -> list[Product]:
+def generate_check(number) -> list[Check]:
     return [
-        Product(
+        Check(
             id=i,
-            name=str(uuid.uuid4()),
-            description=random.choice(desc),
-            price=random.randint(1000, 5000)
+            user_id=str(uuid.uuid4()),
+            sending_status=random.choice(desc),
+            payment_status=random.choice(desc),
+            card_number=random.randint(1000000000000000, 9999999999999999),
+            check_data=random.choice(desc1)
         ) for i in range(number)
     ]

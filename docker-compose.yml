@@ -1,15 +1,19 @@
 version: '3.9'
 
 services:
-  product_service:
+  payment_service:
     container_name: payment_service
     build: payment_service
+    volumes:
+      - ./payment_service:/code
     ports:
       - "8001:8000"
 
-  category_service:
+  payment_gateway_service:
     container_name: payment_gateway_service
     build: payment_gateway_service
+    volumes:
+      - ./payment_gateway_service:/code
     ports:
       - "8002:8000"
 
@@ -23,9 +27,6 @@ services:
       - "8080:8080"
       - "8090:8090"
     command: [ "run", "-d", "-c", "/etc/krakend/krakend.json" ]
-    links:
-      - product_service
-      - category_service
     depends_on:
-      - product_service
-      - category_service
+      - payment_service
+      - payment_gateway_service

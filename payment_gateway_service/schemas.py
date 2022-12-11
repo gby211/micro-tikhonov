@@ -9,3 +9,9 @@ class Category(PostCategory):
     id: int
 
 
+class PostPayment(BaseModel):
+    status: str
+
+
+class PaymentM(PostPayment):
+    id: int

@@ -41,4 +41,7 @@ class CreateCheck(BaseCheck):
 
 
 class Check(BaseCheck):
-    ...
+    id: int
+
+    class Config:
+        orm_mode = True

@@ -1,13 +1,16 @@
 import uuid
 import random
 
-from schemas import Category
+from schemas import PaymentM
 
 
-def generate_categories(number) -> list[Category]:
+desc = ['ok', 'wait', 'close']
+
+
+def generate_payment_from_gateway(number) -> list[PaymentM]:
     return [
-        Category(
+        PaymentM(
             id=i,
-            name=str(uuid.uuid4()),
+            status=random.choice(desc),
         ) for i in range(number)
     ]
