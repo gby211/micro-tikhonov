@@ -29,11 +29,13 @@ class PaymentMethod(BasePaymentMethod):
 
 
 class BaseCheck(BaseModel):
-    user_id: str
+
     sending_status: str
     payment_status: str
-    card_number: str
     check_data: str
+    card_number: str
+    user_id: str
+    check_price: int
 
 
 class CreateCheck(BaseCheck):

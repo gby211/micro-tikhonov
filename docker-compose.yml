@@ -8,6 +8,8 @@ services:
       - ./payment_service:/code
     ports:
       - "8001:8000"
+    environment:
+      - JAEGER_AGENT_HOST=jaeger-all-in-one
 
   payment_gateway_service:
     container_name: payment_gateway_service
@@ -16,6 +18,29 @@ services:
       - ./payment_gateway_service:/code
     ports:
       - "8002:8000"
+    environment:
+      - JAEGER_AGENT_HOST=jaeger-all-in-one
+
+  healthcheck_service:
+    container_name: healthcheck_service
+    build: ./health_check_service
+
+  jaeger-all-in-one:
+    container_name: jaeger
+    image: jaegertracing/all-in-one
+    environment:
+      - JAEGER_DISABLED=false
+    expose:
+      - "16686"
+      - "6831/udp"
+    ports:
+      - "5775:5775/udp"
+      - "6831:6831/udp"
+      - "6832:6832/udp"
+      - "5778:5778"
+      - "16686:16686"
+      - "14268:14268"
+      - "9411:9411"
 
   api_gateway:
     image: devopsfaith/krakend:watch
@@ -30,3 +55,35 @@ services:
     depends_on:
       - payment_service
       - payment_gateway_service
+
+  prometheus:
+      image: prom/prometheus:latest
+      volumes:
+        - ./prometheus:/etc/prometheus/
+      container_name: prometheus
+      hostname: prometheus
+      command:
+        - --config.file=/etc/prometheus/prometheus.yml
+      ports:
+        - "9090:9090"
+      restart: unless-stopped
+      environment:
+        TZ: "Europe/Moscow"
+
+  grafana:
+    container_name: grafana
+    image: grafana/grafana
+    hostname: grafana
+    volumes:
+      - ~/grafana:/var/lib/grafana
+    ports:
+      - "3000:3000"
+
+
+  mongo_product:
+    container_name: mongo_product
+    image: bitnami/mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - ~/apps/mongo:/data/db

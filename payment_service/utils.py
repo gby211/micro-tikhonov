@@ -15,6 +15,7 @@ def generate_check(number) -> list[Check]:
             sending_status=random.choice(desc),
             payment_status=random.choice(desc),
             card_number=random.randint(1000000000000000, 9999999999999999),
-            check_data=random.choice(desc1)
+            check_data=random.choice(desc1),
+            check_price=random.randint(1,1000000)
         ) for i in range(number)
     ]
