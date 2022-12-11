@@ -108,7 +108,7 @@
           "url_pattern": "/v1/login",
           "encoding": "safejson",
           "host": [
-            "http://auth_service:8000"
+            "http://payment_service:8000"
           ]
         }
       ],
