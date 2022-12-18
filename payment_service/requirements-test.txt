@@ -11,3 +11,6 @@ pytest
 mongomock
 pytest-asyncio
 anyio
+python-multipart
+python-jose[cryptography]
+jose
