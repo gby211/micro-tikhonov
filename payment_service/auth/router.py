@@ -37,7 +37,7 @@ def login(
             break
 
     if user is None:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Invalid Credentials')
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Invalid Credentials')
 
     if user.password != request.password:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Invalid Password')
