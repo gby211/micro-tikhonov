@@ -15,7 +15,7 @@ RUN  pip install --upgrade pip && \
       libressl-dev \
       musl-dev \
       libffi-dev && \
-    pip install --no-cache-dir --upgrade -r requirements.txt  && \
+    pip install --no-cache-dir --upgrade -r requirements-test.txt  && \
     apk del \
       libressl-dev \
       musl-dev \
