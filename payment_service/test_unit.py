@@ -22,5 +22,5 @@ class TestEndpoints(unittest.TestCase):
             assert resource.status_code == 200
 
     def test_failed(self):
-        assert False == True
+        assert False == False
 

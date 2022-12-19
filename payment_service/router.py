@@ -16,7 +16,7 @@ serial = 5
 checks = generate_check(serial)
 
 
-@router.get('/', status_code=201, response_model=list[Check])
+@router.get('/', status_code=200, response_model=list[Check])
 async def get_all_checks():
     tracer = opentracing.global_tracer()
     with tracer.start_span(get_all_checks.__name__, child_of=get_current_span()) as span:
