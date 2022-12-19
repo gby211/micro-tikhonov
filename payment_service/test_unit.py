@@ -21,3 +21,6 @@ class TestEndpoints(unittest.TestCase):
             resource = await ac.get('/v1/payment')
             assert resource.status_code == 200
 
+    def test_failed(self):
+        assert False == True
+
