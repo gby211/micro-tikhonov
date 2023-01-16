@@ -29,7 +29,6 @@ class PaymentMethod(BasePaymentMethod):
 
 
 class BaseCheck(BaseModel):
-
     sending_status: str
     payment_status: str
     check_data: str
@@ -47,3 +46,12 @@ class Check(BaseCheck):
 
     class Config:
         orm_mode = True
+
+
+class BaseUserCard(BaseModel):
+    user_id: str
+    card_number: str
+
+
+class Card(BaseUserCard):
+    id: int

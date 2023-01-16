@@ -15,3 +15,15 @@ class CheckModel(mongoengine.Document):
     card_number = mongoengine.StringField(max_length=16, required=True)
     user_id = mongoengine.StringField(max_length=200, required=True)
     check_price = mongoengine.IntField(max_length=200, required=True)
+
+
+class UserCard(mongoengine.Document):
+    meta = {
+        'db_alias': 'mydb',
+        'collection': 'cards'
+    }
+
+    id = mongoengine.UUIDField(primary_key=True)
+    card_number = mongoengine.StringField(max_length=16, required=True)
+    user_id = mongoengine.StringField(max_length=200, required=True)
+

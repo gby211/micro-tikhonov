@@ -4,6 +4,7 @@ import schemas
 import models
 from opentracing_instrumentation.request_context import get_current_span, span_in_context
 
+
 def mapping_model_schema(model: models.CheckModel):
     tracer = opentracing.global_tracer()
     with tracer.start_span(mapping_model_schema.__name__, child_of=get_current_span()) as span:
@@ -32,5 +33,29 @@ def mapping_schema_model(schema: schemas.Check):
                 card_number=schema.card_number,
                 check_data=schema.check_data,
                 check_price=schema.check_price
+            )
+            return model
+
+
+def mapping_model_schema_card(model: models.UserCard):
+    tracer = opentracing.global_tracer()
+    with tracer.start_span(mapping_model_schema_card.__name__, child_of=get_current_span()) as span:
+        with span_in_context(span):
+            schema = schemas.Card(
+                id=model.id,
+                user_id=model.user_id,
+                card_number=model.card_number
+            )
+            return schema
+
+
+def mapping_schema_model_card(schema: schemas.Card):
+    tracer = opentracing.global_tracer()
+    with tracer.start_span(mapping_schema_model_card.__name__, child_of=get_current_span()) as span:
+        with span_in_context(span):
+            model = schemas.Card(
+                id=schema.id,
+                user_id=schema.user_id,
+                card_number=schema.card_number
             )
             return model

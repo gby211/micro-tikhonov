@@ -1,11 +1,10 @@
 import opentracing
 from fastapi import APIRouter, status, HTTPException
-from schemas import Product, PostProduct, Check, CreateCheck
+from schemas import Product, PostProduct, Check, CreateCheck, BaseUserCard, Card
 from utils import generate_check
 import services
 import mappers
 from opentracing_instrumentation.request_context import get_current_span, span_in_context
-
 
 router = APIRouter(
     tags=['Payment'],
@@ -37,6 +36,28 @@ async def add_new_check(check: CreateCheck):
         with span_in_context(span):
             act = await services.add_new_check(check)
             return mappers.mapping_model_schema(act)
+
+
+@router.post('/add_new_card', status_code=201, response_model=BaseUserCard)
+async def add_new_card(card: BaseUserCard):
+    tracer = opentracing.global_tracer()
+    with tracer.start_span(add_new_check.__name__, child_of=get_current_span()) as span:
+        with span_in_context(span):
+            act = await services.add_new_card(card)
+            return mappers.mapping_model_schema_card(act)
+
+@router.get('/get_all_card_by_user_id', status_code=200, response_model=list[Card])
+async def get_all_card_by_user_id(user_id: str):
+    tracer = opentracing.global_tracer()
+    with tracer.start_span(get_all_card_by_user_id.__name__, child_of=get_current_span()) as span:
+        with span_in_context(span):
+            cards = await services.get_cards_by_userid(user_id)
+            output = [
+                mappers.mapping_model_schema_card(card)
+                for card in cards
+            ]
+            return output
+
 
     # global serial
     # new_check = Check(
